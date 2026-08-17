@@ -1,0 +1,130 @@
+{% extends "adminpanel/base.html" %}
+
+{% block content %}
+
+<div class="form-container">
+
+<div class="form-header">
+<h2>Update Product</h2>
+
+<a href="{% url 'aproducts' %}" class="back-btn">
+<i class="fa-solid fa-arrow-left"></i> Back
+</a>
+
+</div>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<div class="form-grid">
+
+<!-- Organisation -->
+
+<div class="form-group">
+<label>Organisation</label>
+
+<select name="company">
+
+{% for org in orgs %}
+
+<option value="{{ org.id }}"
+{% if org.id == product.companyName.id %}selected{% endif %}
+>
+{{ org.company_name }}
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+
+<!-- Product Name -->
+
+<div class="form-group">
+<label>Product Name</label>
+<input type="text" name="product_name" value="{{ product.Product_name }}" required>
+</div>
+
+
+<!-- HSN Code -->
+
+<div class="form-group">
+<label>HSN Code</label>
+<input type="text" name="hsn" value="{{ product.Hsn_code }}">
+</div>
+
+
+<!-- Price -->
+
+<div class="form-group">
+<label>Price</label>
+<input type="number" step="0.01" name="price" value="{{ product.Price }}" required>
+</div>
+
+
+<!-- Stock -->
+
+<div class="form-group">
+<label>Stock</label>
+<input type="number" name="stock" value="{{ product.stock }}">
+</div>
+
+
+<!-- Discount -->
+
+<div class="form-group">
+<label>Discount (%)</label>
+<input type="number" name="discount" value="{{ product.Discount }}">
+</div>
+
+
+<!-- CGST -->
+
+<div class="form-group">
+<label>CGST (%)</label>
+<input type="number" name="cgst" value="{{ product.Cgst }}">
+</div>
+
+
+<!-- SGST -->
+
+<div class="form-group">
+<label>SGST (%)</label>
+<input type="number" name="sgst" value="{{ product.Sgst }}">
+</div>
+
+
+<!-- IGST -->
+
+<div class="form-group">
+<label>IGST (%)</label>
+<input type="number" name="igst" value="{{ product.Igst }}">
+</div>
+
+
+<!-- Cess -->
+
+<div class="form-group">
+<label>Cess (%)</label>
+<input type="number" name="cess" value="{{ product.Cess }}">
+</div>
+
+</div>
+
+
+<div class="form-actions">
+
+<button type="submit" class="save-btn">
+<i class="fa-solid fa-pen"></i> Update Product
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+{% endblock %}

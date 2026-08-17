@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+
+/* =========================
+   WRAPPER
+========================= */
+.dashboard-wrapper {
+    padding: 20px;
+}
+
+/* =========================
+   HEADER
+========================= */
+.dashboard-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #12182b;
+}
+
+.dashboard-header p {
+    color: #7a8599;
+}
+
+/* =========================
+   STATS (MINIMAL PREMIUM)
+========================= */
+.stats-grid {
+    display: flex;
+    gap: 16px;
+    margin: 20px 0;
+}
+
+.stat-card {
+    flex: 1;
+    padding: 18px 22px;
+    border-radius: 14px;
+
+    background: #ffffff;
+    border: 1px solid #e6ebf5;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+/* NUMBER (IMPORTANT 🔥) */
+.stat-card h2 {
+    color: #12182b;   /* BLACK NUMBER */
+    font-size: 22px;
+    font-weight: 700;
+}
+
+/* LABEL */
+.stat-card p {
+    color: #8b95a7;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+/* =========================
+   TABLE CARD
+========================= */
+.table-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+
+    border: 1px solid #e6ebf5;
+
+    box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+}
+
+/* =========================
+   TABLE
+========================= */
+.premium-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.premium-table th {
+    text-align: left;
+    padding: 12px;
+    font-size: 13px;
+    color: #8b95a7;
+}
+
+.premium-table td {
+    padding: 14px;
+    border-top: 1px solid #eef2f7;
+    color: #12182b;
+}
+
+/* =========================
+   INVOICE ROW
+========================= */
+.premium-table tr:hover {
+    background: #f8faff;
+}
+
+/* =========================
+   PRODUCT SECTION
+========================= */
+.product-row {
+    background: #f9fbff;
+}
+
+.product-box {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* PRODUCT ITEM (CLEAN CARD) */
+.product-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: #ffffff;
+    padding: 12px 16px;
+
+    border-radius: 12px;
+
+    border: 1px solid #eef2f7;
+}
+
+/* PRODUCT NAME */
+.product-item span:first-child {
+    font-weight: 500;
+    color: #12182b;
+}
+
+/* QTY */
+.product-item span:nth-child(2) {
+    color: #7a8599;
+}
+
+/* PRICE (BLACK 🔥) */
+.price {
+    color: #12182b;
+    font-weight: 600;
+}
+
+/* =========================
+   EMPTY
+========================= */
+.no-data {
+    text-align: center;
+    padding: 30px;
+    color: #9aa3b2;
+}
+</style>
+
+<div class="dashboard-wrapper">
+
+    <!-- HEADER -->
+    <div class="dashboard-header">
+        <h1>{{ customer.cust_name }}</h1>
+        <p>Customer Purchase History</p>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-grid">
+
+        <div class="stat-card gradient-purple">
+            <h2>₹ {{ total_spent }}</h2>
+            <p>Total Spent</p>
+        </div>
+
+        <div class="stat-card gradient-blue">
+            <h2>{{ invoice_data|length }}</h2>
+            <p>Total Invoices</p>
+        </div>
+
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-card">
+
+        <table class="premium-table">
+
+            <thead>
+                <tr>
+                    <th>Invoice No</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for data in invoice_data %}
+
+                <!-- INVOICE ROW -->
+                <tr>
+                    <td>{{ data.invoice.Invoice_num }}</td>
+                    <td>{{ data.invoice.Date }}</td>
+                    <td class="price">₹ {{ data.invoice.final_total }}</td>
+                </tr>
+
+                <!-- PRODUCTS -->
+                <tr class="product-row">
+                    <td colspan="3">
+
+                        <div class="product-box">
+
+                            {% for item in data.items %}
+
+                            <div class="product-item">
+                                <span>{{ item.product.Product_name }}</span>
+                                <span>Qty: {{ item.Qty }}</span>
+                                <span class="price">₹ {{ item.Price }}</span>
+                            </div>
+
+                            {% empty %}
+                            <div class="no-data">No products found</div>
+                            {% endfor %}
+
+                        </div>
+
+                    </td>
+                </tr>
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="3" class="no-data">
+                        No purchase history found
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

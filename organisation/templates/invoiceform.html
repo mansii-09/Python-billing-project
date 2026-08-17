@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="invoice-wrapper">
+
+    <!-- HEADER -->
+    <div class="invoice-header">
+        <h1>Create Invoice</h1>
+        <p>Select customer and product</p>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="invoice-card">
+
+            <div class="invoice-grid">
+
+                <!-- CUSTOMER -->
+                <div class="invoice-section">
+                    <h3>Customer</h3>
+
+                    <div class="form-group">
+                        <label>Select Customer</label>
+
+                        <select name="customer" class="form-control" required>
+                            <option value="">-- Select Customer --</option>
+
+                            {% for c in customers %}
+                                <option value="{{ c.id }}">
+                                    {{ c.cust_name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+
+                <!-- PRODUCT -->
+                <div class="invoice-section">
+                    <h3>Product</h3>
+
+                    <div class="form-group">
+                        <label>Select Product</label>
+
+                        <select name="product" id="productSelect" class="form-control" required>
+                            <option value="">-- Select Product --</option>
+
+                            {% for p in products %}
+                                <option 
+                                    value="{{ p.id }}"
+                                    data-price="{{ p.Price }}"
+                                    data-stock="{{ p.stock }}"
+                                    data-gst="{{ p.Cgst|add:p.Sgst|add:p.Igst }}"
+                                    data-discount="{{ p.Discount }}"
+                                >
+                                    {{ p.Product_name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- INFO -->
+                    <p id="stockInfo" class="info-text"></p>
+                    <p id="priceInfo" class="info-text"></p>
+                </div>
+
+
+                <!-- QUANTITY -->
+                <div class="invoice-section">
+                    <h3>Quantity</h3>
+
+                    <div class="form-group">
+                        <label>Enter Quantity</label>
+
+                        <input type="number" name="Qty" id="qtyInput" class="form-control" min="1" required>
+                    </div>
+
+                    <!-- PREVIEW -->
+                    <div class="preview-box">
+                        <p id="totalPreview">Total: ₹ 0</p>
+                        <p id="warningText" class="warning"></p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ACTION -->
+            <div class="invoice-actions">
+                <button type="submit" class="btn-save">
+                    <i class="fa fa-check"></i>
+                    Create Invoice
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+<!-- 🔥 SCRIPT -->
+<script>
+
+const productSelect = document.getElementById("productSelect");
+const qtyInput = document.getElementById("qtyInput");
+
+const stockInfo = document.getElementById("stockInfo");
+const priceInfo = document.getElementById("priceInfo");
+const totalPreview = document.getElementById("totalPreview");
+const warningText = document.getElementById("warningText");
+
+function updateInfo() {
+
+    let selected = productSelect.options[productSelect.selectedIndex];
+
+    let price = parseFloat(selected.getAttribute("data-price")) || 0;
+    let stock = parseInt(selected.getAttribute("data-stock")) || 0;
+    let gst = parseFloat(selected.getAttribute("data-gst")) || 0;
+    let discount = parseFloat(selected.getAttribute("data-discount")) || 0;
+
+    let qty = parseInt(qtyInput.value) || 0;
+
+    // STOCK
+    stockInfo.innerText = "Available Stock: " + stock;
+
+    if(stock <= 5){
+        stockInfo.style.color = "red";
+    } else {
+        stockInfo.style.color = "#666";
+    }
+
+    // PRICE
+    priceInfo.innerText = "Price: ₹ " + price;
+
+    // CALCULATION
+    let base = price * qty;
+    let gst_amount = base * gst / 100;
+    let discount_amount = base * discount / 100;
+
+    let total = base + gst_amount - discount_amount;
+
+    totalPreview.innerText = "Total: ₹ " + total.toFixed(2);
+
+    // 🚨 STOCK WARNING
+    if(qty > stock){
+        warningText.innerText = "⚠️ Not enough stock!";
+        warningText.style.color = "red";
+    } else {
+        warningText.innerText = "";
+    }
+}
+
+// EVENTS
+productSelect.addEventListener("change", updateInfo);
+qtyInput.addEventListener("input", updateInfo);
+
+</script>
+
+{% endblock %}

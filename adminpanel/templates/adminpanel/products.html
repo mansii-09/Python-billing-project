@@ -1,0 +1,87 @@
+{% extends "adminpanel/base.html" %}
+
+{% block content %}
+
+<div class="table-box">
+
+<div class="table-header">
+
+<h3>Products</h3>
+
+<div class="table-actions">
+
+<form method="GET">
+<input type="text" name="search" placeholder="Search product..." value="{{ search }}">
+<button type="submit">Search</button>
+</form>
+
+<a href="{% url 'add_product' %}" class="btn-add">+ Add Product</a>
+
+</div>
+
+</div>
+
+<table class="org-table">
+
+<thead>
+
+<tr>
+<th>category</th>
+<th>Product</th>
+<th>Organisation</th>
+<th>HSN</th>
+<th>Price</th>
+<th>Stock</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for p in products %}
+
+<tr>
+<td>{{ p.category.name }}</td>
+<td>{{ p.Product_name }}</td>
+<td>{{ p.companyName }}</td>
+<td>{{ p.Hsn_code }}</td>
+<td>₹ {{ p.Price }}</td>
+<td>{{ p.stock }}</td>
+
+<td>
+    {% if p.stock <= 5 %}
+        <span style="background:#ffe5e5; color:#d32f2f; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600;">Low Stock</span>
+    {% else %}
+        <span style="background:#e6fff7; color:#0f766e; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600;">In Stock</span>
+    {% endif %}
+</td>
+
+<td class="action-buttons">
+
+        <a href="{% url 'update_product' p.id %}" class="action-btn edit">
+            <i class="fa-solid fa-pen"></i>
+        </a>
+
+        <form action="{% url 'delete_product' p.id %}" method="POST" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="action-btn btn-delete" style="border:none; cursor:pointer;"
+                                    onclick="return confirm('Delete this product?')">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </form>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

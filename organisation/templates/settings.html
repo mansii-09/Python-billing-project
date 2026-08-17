@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="settings-wrapper">
+    <!-- Sidebar -->
+    <div class="settings-sidebar">
+        <h3>Settings</h3>
+        <a href="#organisation" class="active">Organisation Info</a>
+        <a href="#account">Account / Password</a>
+    </div>
+
+    <!-- Content -->
+    <div class="settings-content">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Organisation Card -->
+        <div class="card" id="organisation">
+            <h2>Organisation Info</h2>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label>Company Name</label>
+                <input type="text" name="company_name" value="{{ org.company_name }}">
+                <label>Company Type</label>
+                <input type="text" name="company_type" value="{{ org.company_type }}">
+                <label>PAN Number</label>
+                <input type="text" name="pan_number" value="{{ org.pan_number }}">
+                <label>GSTIN Number</label>
+                <input type="text" name="gstin_number" value="{{ org.gstin_number }}">
+                <label>Address 1</label>
+                <input type="text" name="address_1" value="{{ org.address_1 }}">
+                <label>Address 2</label>
+                <input type="text" name="address_2" value="{{ org.address_2 }}">
+                <label>State</label>
+                <input type="text" name="state" value="{{ org.state }}">
+                <label>City</label>
+                <input type="text" name="city" value="{{ org.city }}">
+                <label>Pincode</label>
+                <input type="text" name="pincode" value="{{ org.pincode }}">
+                <label>Full Name</label>
+                <input type="text" name="full_name" value="{{ org.full_name }}">
+                <label>Phone</label>
+                <input type="text" name="phone" value="{{ org.phone }}">
+                <label>Email</label>
+                <input type="email" name="email" value="{{ org.email }}">
+                <label>Company Logo</label>
+                <input type="file" name="logo">
+                {% if org.logo %}
+                    <img src="{{ org.logo.url }}" class="logo-preview">
+                {% endif %}
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+
+        <!-- Account / Password Card -->
+        <div class="card" id="account">
+            <h2>Account / Password</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <label>Current Password</label>
+                <input type="password" name="current_password">
+                <label>New Password</label>
+                <input type="password" name="new_password">
+                <label>Confirm Password</label>
+                <input type="password" name="confirm_password">
+                <button type="submit">Update Password</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+.settings-wrapper {
+    display: flex;
+    max-width: 1000px;
+    margin: 30px auto;
+    font-family: Arial, sans-serif;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+.settings-sidebar {
+    flex: 1;
+    min-width: 200px;
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.settings-sidebar h3 { margin-bottom: 15px; color: #333; }
+.settings-sidebar a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 6px;
+    margin-bottom: 5px;
+}
+.settings-sidebar a.active, .settings-sidebar a:hover {
+    background-color: #4CAF50; color: #fff;
+}
+.settings-content { flex: 3; min-width: 300px; }
+.card {
+    background-color: #fff;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.card h2 { margin-bottom: 20px; border-bottom: 2px solid #4CAF50; padding-bottom: 5px; }
+.card form label { display: block; margin-top: 15px; font-weight: bold; }
+.card form input {
+    width: 100%; padding: 10px; margin-top: 5px;
+    border-radius: 6px; border: 1px solid #ccc; box-sizing: border-box;
+}
+.card form button {
+    margin-top: 20px; padding: 12px 20px; background-color: #4CAF50;
+    color: #fff; border: none; border-radius: 6px; cursor: pointer;
+}
+.card form button:hover { background-color: #45a049; }
+.message { margin-bottom: 15px; color: green; }
+img.logo-preview { margin-top: 10px; width: 120px; border-radius: 6px; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .settings-wrapper { flex-direction: column; gap: 15px; }
+    .settings-sidebar { width: 100%; display: flex; flex-wrap: wrap; justify-content: space-around; }
+    .settings-sidebar a { margin-bottom: 10px; flex: 1 1 45%; text-align: center; }
+    .settings-content { width: 100%; }
+}
+</style>
+
+<script>
+const links = document.querySelectorAll('.settings-sidebar a');
+links.forEach(link => {
+    link.addEventListener('click', e => {
+        e.preventDefault();
+        links.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        const target = document.querySelector(link.getAttribute('href'));
+        window.scrollTo({ top: target.offsetTop - 50, behavior: 'smooth' });
+    });
+});
+</script>
+{% endblock %}

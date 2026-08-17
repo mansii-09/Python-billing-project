@@ -1,0 +1,81 @@
+{% extends "adminpanel/base.html" %}
+
+{% block content %}
+
+<div class="form-container">
+
+<div class="form-header">
+<h2>Update Customer</h2>
+
+<a href="{% url 'customers' %}" class="back-btn">
+<i class="fa-solid fa-arrow-left"></i> Back
+</a>
+
+</div>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Organisation</label>
+
+<select name="company">
+
+{% for org in orgs %}
+
+<option value="{{ org.id }}"
+{% if org.id == customer.companyName.id %}selected{% endif %}
+>
+{{ org.company_name }}
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<div class="form-group">
+<label>Customer Name</label>
+<input type="text" name="cust_name" value="{{ customer.cust_name }}">
+</div>
+
+<div class="form-group">
+<label>Contact Person</label>
+<input type="text" name="cont_person" value="{{ customer.cont_person }}">
+</div>
+
+<div class="form-group">
+<label>Contact Number</label>
+<input type="text" name="contact_num" value="{{ customer.contact_num }}">
+</div>
+
+<div class="form-group">
+<label>Email</label>
+<input type="email" name="email" value="{{ customer.email }}">
+</div>
+
+<div class="form-group">
+<label>City</label>
+<input type="text" name="city" value="{{ customer.city }}">
+</div>
+
+</div>
+
+<div class="form-actions">
+
+<button class="save-btn">
+<i class="fa-solid fa-pen"></i>
+Update Customer
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+{% endblock %}

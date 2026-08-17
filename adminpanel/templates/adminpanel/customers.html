@@ -1,0 +1,79 @@
+{% extends "adminpanel/base.html" %}
+
+{% block content %}
+
+<div class="table-box">
+
+<div class="table-header">
+
+<h3>Customers</h3>
+
+<div class="table-actions">
+
+<form method="GET">
+
+<input type="text" name="search" placeholder="Search customer..." value="{{ search }}">
+
+<button type="submit">Search</button>
+
+</form>
+
+<a href="{% url 'add_customer' %}" class="btn-add">+ Add Customer</a>
+
+</div>
+
+</div>
+
+
+<table class="org-table">
+
+<thead>
+
+<tr>
+<th>Customer</th>
+<th>Contact</th>
+<th>Email</th>
+<th>City</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for cust in customers %}
+
+<tr>
+
+<td>{{ cust.cust_name }}</td>
+
+<td>{{ cust.contact_num }}</td>
+
+<td>{{ cust.email }}</td>
+
+<td>{{ cust.city }}</td>
+
+<td class="action-buttons">
+
+<a href="{% url 'update_customer' cust.id %}" class="action-btn edit">
+<i class="fa-solid fa-pen"></i>
+</a>
+
+<a href="{% url 'admin_delete_customer' cust.id %}" class="action-btn delete"
+onclick="return confirm('Delete this customer?');">
+<i class="fa-solid fa-trash"></i>
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

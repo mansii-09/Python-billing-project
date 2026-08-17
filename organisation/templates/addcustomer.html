@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="customer-form-wrapper">
+
+    <div class="form-header">
+
+        <div class="form-header-icon">
+            <i class="fa fa-user-plus"></i>
+        </div>
+
+        <div>
+            <h1>Add Customer / Vendor</h1>
+            <p>Create and manage your customers easily</p>
+        </div>
+
+    </div>
+
+
+    <div class="customer-form-card">
+
+        <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Customer / Vendor Name</label>
+                <input type="text" name="cust_name" value="{{data.cust_name}}">
+            </div>
+
+            <div class="form-group">
+                <label>Contact Person</label>
+                <input type="text" name="cont_person" value="{{data.cont_person}}">
+            </div>
+
+            <div class="form-group">
+                <label>Contact Number</label>
+                <input type="number" name="contact_num" value="{{data.contact_num}}">
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" value="{{data.email}}">
+            </div>
+
+            <div class="form-group">
+                <label>Company Type</label>
+                <input type="text" name="company_type" value="{{data.company_type}}">
+            </div>
+
+            <div class="form-group">
+                <label>Address Line 1</label>
+                <input type="text" name="address" value="{{data.address}}">
+            </div>
+
+            <div class="form-group">
+                <label>Address Line 2</label>
+                <input type="text" name="address_2" value="{{data.address_2}}">
+            </div>
+
+            <div class="form-group">
+                <label>Landmark</label>
+                <input type="text" name="landmark" value="{{data.landmark}}">
+            </div>
+
+            <div class="form-group">
+                <label>Country</label>
+                <input type="text" name="country" value="{{data.country}}">
+            </div>
+
+            <div class="form-group">
+                <label>State</label>
+                <input type="text" name="state" value="{{data.state}}">
+            </div>
+
+            <div class="form-group">
+                <label>City</label>
+                <input type="text" name="city" value="{{data.city}}">
+            </div>
+
+            <div class="form-group">
+                <label>Pincode</label>
+                <input type="number" name="pincode" value="{{data.pincode}}">
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+
+            <button type="submit" class="premium-save-btn">
+                <i class="fa fa-save"></i>
+                Save Customer
+            </button>
+
+        </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

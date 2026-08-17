@@ -1,0 +1,76 @@
+{% extends "adminpanel/base.html" %}
+
+{% block content %}
+
+<div class="table-box">
+
+<div class="table-header">
+
+<h3>Invoices</h3>
+
+<div class="table-actions">
+
+<form method="GET">
+<input type="text" name="search" placeholder="Search invoice..." value="{{ search }}">
+<button type="submit">Search</button>
+</form>
+
+<a href="{% url 'add_invoice' %}" class="btn-add">+ Add Invoice</a>
+
+</div>
+
+</div>
+
+<table class="org-table">
+
+<thead>
+
+<tr>
+<th>Invoice No</th>
+<th>Customer</th>
+<th>Date</th>
+<th>Payment</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for inv in invoices %}
+
+<tr>
+
+<td>{{ inv.Invoice_num }}</td>
+
+<td>{{ inv.Cust_name }}</td>
+
+<td>{{ inv.Date }}</td>
+
+<td>{{ inv.Payment_type }}</td>
+
+<td class="action-buttons">
+
+<a href="{% url 'update_invoice' inv.id %}" class="action-btn edit">
+<i class="fa-solid fa-pen"></i>
+</a>
+
+<a href="{% url 'delete_invoice' inv.id %}"
+class="action-btn delete"
+onclick="return confirm('Delete this invoice?');">
+<i class="fa-solid fa-trash"></i>
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

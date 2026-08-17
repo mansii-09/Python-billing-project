@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="form-wrapper">
+
+<h2>Edit Employee</h2>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<div class="form-grid">
+
+<input type="text" name="name" value="{{ emp.name }}" required>
+
+<input type="email" name="email" value="{{ emp.email }}">
+
+<input type="text" name="phone" value="{{ emp.phone }}">
+
+<input type="text" name="role" value="{{ emp.role }}">
+
+<input type="number" name="salary" value="{{ emp.salary }}">
+
+<input type="date" name="joining_date" value="{{ emp.joining_date|date:'Y-m-d' }}">
+
+</div>
+
+<button class="btn-primary">
+Update Employee
+</button>
+
+</form>
+
+</div>
+
+{% endblock %}

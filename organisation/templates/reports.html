@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+/* Wrapper */
+.report-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Card styling */
+.report-card {
+    background-color: #fdfdfd;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 20px;
+}
+
+/* Section heading */
+.report-card h2 {
+    margin-bottom: 15px;
+    color: #2e2e2e;
+    font-size: 22px;
+    border-bottom: 2px solid #4CAF50;
+    padding-bottom: 5px;
+}
+
+/* Table styling */
+.report-card table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #333 !important;
+}
+
+.report-card th {
+    background-color: #4CAF50;
+    color: #fff !important;
+    padding: 10px;
+    text-align: left;
+}
+
+.report-card td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    color: #333;
+}
+
+/* Zebra & hover */
+.report-card tr:nth-child(even) { background-color: #f6f6f6; }
+.report-card tr:hover { background-color: #e8f5e9; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .report-card table, .report-card th, .report-card td {
+        display: block;
+        width: 100%;
+    }
+    .report-card tr { margin-bottom: 15px; display: block; }
+    .report-card td { border: none; padding: 8px 0; }
+}
+</style>
+
+<div class="report-wrapper">
+
+    <!-- Customers -->
+    <div class="report-card">
+        <h2>Customers</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Contact Person</th>
+                <th>Contact Number</th>
+                <th>Email</th>
+            </tr>
+            {% for customer in customers %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ customer.cust_name }}</td>
+                <td>{{ customer.cont_person }}</td>
+                <td>{{ customer.contact_num }}</td>
+                <td>{{ customer.email }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- Invoices -->
+    <div class="report-card">
+        <h2>Invoices</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Invoice No</th>
+                <th>Customer</th>
+                <th>Date</th>
+                <th>Final Total</th>
+            </tr>
+            {% for invoice in invoices %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ invoice.Invoice_num }}</td>
+                <td>{{ invoice.Cust_name.cust_name }}</td>
+                <td>{{ invoice.Date }}</td>
+                <td>{{ invoice.final_total }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- Products Sales -->
+    <div class="report-card">
+        <h2>Products Sales</h2>
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Total Sold</th>
+                <th>Total Amount</th>
+            </tr>
+             {% for ps in product_sales %}
+        <tr>
+            <td>{{ ps.product.Product_name }}</td>
+            <td>
+                {% if ps.product.category %}
+                    {{ ps.product.category.name }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+            <td>{{ ps.total_sold }}</td>
+            <td>{{ ps.total_amount }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+
+</div>
+{% endblock %}

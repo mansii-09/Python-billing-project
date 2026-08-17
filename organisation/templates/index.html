@@ -1,0 +1,305 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="dashboard-wrapper">
+
+    
+    <!-- Header -->
+    <div class="dashboard-header">
+
+        <div>
+            <h1>Dashboard</h1>
+            <p>Welcome back, {{ company }}</p>
+        </div>
+
+        <div class="quick-actions">
+
+            <a href="{% url 'invoiceform' %}" class="btn-action">
+                <i class="fa fa-plus"></i> New Invoice
+            </a>
+
+            <a href="{% url 'addcustomer' %}" class="btn-action secondary">
+                <i class="fa fa-user-plus"></i> Add Customer
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+
+        <!-- TOTAL CUSTOMERS -->
+        <div class="stat-card gradient-blue">
+            <i class="fa fa-users"></i>
+            <div>
+                <h2>{{ customer_count }}</h2>
+                <p>Total Customers</p>
+            </div>
+        </div>
+
+        <!-- DAILY REVENUE -->
+        <div class="stat-card gradient-purple">
+            <i class="fa fa-chart-line"></i>
+            <div>
+                <h2>₹ {{ today_sales }}</h2>
+                <p>Today's Revenue</p>
+            </div>
+        </div>
+
+        <!-- TOP SELLING PRODUCT -->
+        <div class="stat-card gradient-orange">
+            <i class="fa fa-star"></i>
+            <div>
+                <h2>{{ top_product|default:"N/A" }}</h2>
+                <p>Top Selling Product</p>
+            </div>
+        </div>
+
+        <!-- PROFIT / LOSS (KEEP SAME) -->
+        <div class="stat-card revenue-card 
+            {% if revenue_status == 'profit' %}
+            profit-bg
+            {% else %}
+            loss-bg
+            {% endif %}">
+
+            <div class="revenue-left">
+
+                {% if revenue_status == "profit" %}
+                <div class="revenue-icon">
+                    <i class="fa fa-arrow-up"></i>
+                </div>
+                {% else %}
+                <div class="revenue-icon">
+                    <i class="fa fa-arrow-down"></i>
+                </div>
+                {% endif %}
+
+            </div>
+
+            <div class="revenue-content">
+
+                <h2>₹ {{ revenue }}</h2>
+
+                {% if revenue_status == "profit" %}
+                    <p>Monthly Profit</p>
+                {% else %}
+                    <p>Monthly Loss</p>
+                {% endif %}
+
+                <div class="revenue-details">
+                    <span>Sales ₹ {{ total_sales }}</span>
+                    <span>Salary ₹ {{ total_salary }}</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Mini Charts -->
+    <div class="charts-grid">
+
+        <div class="chart-card">
+            <h3>Sales Overview</h3>
+            <canvas id="salesChart"></canvas>
+        </div>
+
+        <div class="chart-card">
+            <h3>Invoice Growth</h3>
+            <canvas id="invoiceChart"></canvas>
+        </div>
+
+    </div>
+
+
+    <!-- Recent Invoices -->
+    <div class="dashboard-section">
+
+        <div class="section-header">
+            <h2>Recent Invoices</h2>
+        </div>
+
+        <table class="dashboard-table">
+
+            <thead>
+                <tr>
+                    <th>Invoice Number</th>
+                    <th>Customer</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for invoice in recent_invoices %}
+
+                <tr>
+                    <td>{{ invoice.Invoice_num }}</td>
+                    <td>{{ invoice.Cust_name }}</td>
+                    <td>{{ invoice.Date }}</td>
+                </tr>
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="3">No invoices available</td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    // ===== Django Data =====
+    const salesLabels = JSON.parse('{{ sales_labels|escapejs }}');
+    const salesData = JSON.parse('{{ sales_data|escapejs }}');
+
+    const invoiceLabels = JSON.parse('{{ invoice_labels|escapejs }}');
+    const invoiceData = JSON.parse('{{ invoice_data|escapejs }}');
+
+    console.log('salesLabels', salesLabels, 'salesData', salesData);
+    console.log('invoiceLabels', invoiceLabels, 'invoiceData', invoiceData);
+
+    const salesCtx = document.getElementById('salesChart').getContext('2d');
+    const invoiceCtx = document.getElementById('invoiceChart').getContext('2d');
+
+    // ===== Gradient for Sales =====
+    const gradient = salesCtx.createLinearGradient(0,0,0,300);
+    gradient.addColorStop(0,"rgba(99,102,241,0.5)");
+    gradient.addColorStop(1,"rgba(99,102,241,0)");
+
+    // ===== Sales Chart =====
+    new Chart(salesCtx, {
+
+        type: 'line',
+
+        data: {
+
+            labels: salesLabels,
+
+            datasets: [{
+                label: "Monthly Sales",
+                data: salesData,
+
+                borderColor: "#6366f1",
+                backgroundColor: gradient,
+
+                borderWidth: 3,
+
+                tension: 0.4,
+
+                pointBackgroundColor: "#6366f1",
+                pointBorderColor: "#fff",
+                pointRadius: 5,
+                pointHoverRadius: 7,
+
+                fill: true
+            }]
+        },
+
+        options: {
+
+            responsive: true,
+
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+
+            scales: {
+
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: "#eee"
+                    }
+                },
+
+                x: {
+                    grid: {
+                        display:false
+                    }
+                }
+
+            }
+
+        }
+
+    });
+
+
+    // ===== Invoice Chart =====
+    new Chart(invoiceCtx, {
+
+        type: 'bar',
+
+        data: {
+
+            labels: invoiceLabels,
+
+            datasets: [{
+                label: "Invoices",
+                data: invoiceData,
+                backgroundColor: "rgba(16,185,129,0.8)",
+                borderRadius: 8,
+                hoverBackgroundColor: "#10b981"
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+
+            scales: {
+
+                y: {
+                    beginAtZero:true,
+                    grid:{
+                        color:"#eee"
+                    }
+                },
+
+                x:{
+                    grid:{
+                        display:false
+                    }
+                }
+
+            }
+
+        }
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

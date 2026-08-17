@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+
+.invoice-wrapper{
+    padding: 25px;
+}
+
+.invoice-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.invoice-header h1{
+    margin:0;
+}
+
+.invoice-card{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.05);
+}
+
+.invoice-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.invoice-table th{
+    background:#f5f7fb;
+    padding:12px;
+    text-align:left;
+    font-weight:600;
+}
+
+.invoice-table td{
+    padding:12px;
+    border-top:1px solid #eee;
+}
+
+.invoice-table tr:hover{
+    background:#fafafa;
+}
+
+/* ACTION BUTTONS */
+.action-buttons{
+    display:flex;
+    gap:10px;
+}
+
+.action-buttons a{
+    text-decoration:none !important;
+}
+
+.btn-premium{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 12px;
+    border-radius:8px;
+    font-size:13px;
+    font-weight:600;
+    transition:0.2s;
+}
+
+/* View Button */
+.view-btn{
+    background:#4e73df;
+    color:white;
+}
+
+.view-btn:hover{
+    background:#3c5ec2;
+}
+
+/* Download Button */
+.download-btn{
+    background:#1cc88a;
+    color:white;
+}
+
+.download-btn:hover{
+    background:#17a673;
+}
+
+.no-data{
+    text-align:center;
+    padding:20px;
+    color:gray;
+}
+
+
+</style>
+
+<div class="invoice-wrapper">
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="msg-box" style="
+        background: #f8d7da;
+        color: #721c24;
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 6px;
+        font-weight: 500;
+    ">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+
+<div class="invoice-header">
+
+<div>
+<h1>Invoices</h1>
+<p>View all generated invoices</p>
+</div>
+
+<div>
+<a href="{% url 'invoiceform' %}" class="btn-primary">
+<i class="fa fa-plus"></i> Add Invoice
+</a>
+</div>
+
+</div>
+
+<div class="invoice-card">
+
+<table class="invoice-table">
+
+<thead>
+<tr>
+<th>Invoice No</th>
+<th>Customer</th>
+<th>Date</th>
+<th>Total</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for invoice in data %}
+
+<tr>
+
+<td>#{{ invoice.Invoice_num }}</td>
+<td>{{ invoice.Cust_name.cust_name }}</td>
+<td>{{ invoice.Date }}</td>
+<td><b>₹ {{ invoice.final_total }}</b></td>
+
+<td class="action-buttons">
+
+<a href="{% url 'view_invoice' invoice.id %}" class="btn-premium view-btn">
+<i class="fa fa-eye"></i> View
+</a>
+
+<a href="{% url 'download_invoice_pdf' invoice.id %}" class="btn-premium download-btn">
+<i class="fa fa-download"></i> PDF
+</a>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="5" class="no-data">No invoices available</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script>
+setTimeout(function() {
+    let msgs = document.querySelectorAll(".msg-box");
+    msgs.forEach(function(msg) {
+        msg.style.transition = "opacity 0.5s";
+        msg.style.opacity = "0";
+
+        setTimeout(() => {
+            msg.style.display = "none";
+        }, 500);
+    });
+}, 3000);
+</script>
+
+{% endblock %}

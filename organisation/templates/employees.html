@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if messages %}
+  {% for message in messages %}
+    <div class="msg-box" style="
+        background: #d4edda;
+        color: #155724;
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 8px;
+        font-weight: 500;
+    ">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+
+<div class="dashboard-wrapper">
+
+<div class="dashboard-header">
+
+<h1 class="page-title">Employees</h1>
+
+<a href="{% url 'add_employee' %}" class="add-customer-btn">
+<i class="fa fa-user-plus"></i>
+<span>Add Employee</span>
+</a>
+
+</div>
+
+
+<div class="table-card">
+
+<table class="premium-table">
+
+<thead>
+
+<tr>
+<th>ID</th>
+<th>Employee</th>
+<th>Phone</th>
+<th>Role</th>
+<th>Salary</th>
+<th>Joining</th>
+<th>Actions</th>
+</tr>
+
+</thead>
+
+
+<tbody>
+
+{% for emp in employees %}
+
+<tr>
+
+<td>#{{ forloop.counter }}</td>
+
+<td class="customer-cell">
+
+<div class="avatar">
+{{ emp.name|slice:":1" }}
+</div>
+
+<div class="customer-info">
+<span class="name">{{ emp.name }}</span>
+<span class="email">{{ emp.email }}</span>
+</div>
+
+</td>
+
+<td>{{ emp.phone }}</td>
+
+<td>
+
+<span class="badge">
+{{ emp.role }}
+</span>
+
+</td>
+
+<td>₹ {{ emp.salary }}</td>
+
+<td>{{ emp.joining_date }}</td>
+
+<td class="actions">
+
+<a href="{% url 'edit_employee' emp.id %}" class="icon-btn edit">
+<i class="fa fa-pen"></i>
+</a>
+
+<a href="{% url 'delete_employee' emp.id %}"
+onclick="return confirm('Delete this employee?')"
+class="icon-btn delete">
+
+<i class="fa fa-trash"></i>
+
+</a>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="7" style="text-align:center;padding:30px;">
+No employees found
+</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+<script>
+setTimeout(function() {
+    let msgs = document.querySelectorAll(".msg-box");
+    msgs.forEach(function(msg) {
+        msg.style.opacity = "0";
+        msg.style.transition = "0.5s";
+
+        setTimeout(() => {
+            msg.style.display = "none";
+        }, 500);
+    });
+}, 3000);
+</script>
+
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "adminpanel/base.html" %}
+
+{% block content %}
+
+<div class="table-box">
+
+<div class="table-header">
+
+<h3>Employees</h3>
+
+<div class="table-actions">
+
+<form method="GET">
+<input type="text" name="search" placeholder="Search employee..." value="{{ search }}">
+<button type="submit">Search</button>
+</form>
+
+<a href="{% url 'admin_add_employee' %}" class="btn-add">+ Add Employee</a>
+
+</div>
+
+</div>
+
+<table class="org-table">
+
+<thead>
+
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Phone</th>
+<th>Role</th>
+<th>Salary</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for e in employees %}
+
+<tr>
+
+<td>{{ e.name }}</td>
+<td>{{ e.email }}</td>
+<td>{{ e.phone }}</td>
+<td>{{ e.role }}</td>
+<td>{{ e.salary }}</td>
+
+<td class="action-buttons">
+
+<a href="{% url 'update_employee' e.id %}" class="action-btn edit">
+<i class="fa-solid fa-pen"></i>
+</a>
+
+<a href="{% url 'admin_delete_employee' e.id %}"
+class="action-btn delete"
+onclick="return confirm('Delete this employee?');">
+
+<i class="fa-solid fa-trash"></i>
+
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

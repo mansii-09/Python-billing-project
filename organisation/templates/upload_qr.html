@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="dashboard-wrapper">
+
+<div class="page-header">
+<h1>Upload Payment QR</h1>
+<p>Upload or update your payment QR</p>
+</div>
+
+<div class="card-box">
+
+<form method="POST" enctype="multipart/form-data">
+
+{% csrf_token %}
+
+<!-- Show existing QR -->
+{% if qr %}
+
+<div class="previous-qr">
+
+<p><strong>Current Payment QR</strong></p>
+
+<img src="{{ qr.qr_image.url }}">
+
+<p class="current-link">
+{{ qr.payment_link }}
+</p>
+
+</div>
+
+{% endif %}
+
+<div class="form-group">
+
+<label>Payment Link</label>
+
+<input 
+type="text" 
+name="payment_link" 
+placeholder="https://payment-link.com"
+value="{{ qr.payment_link|default:'' }}">
+
+</div>
+
+<div class="form-group">
+
+<label>Upload New QR Image (optional)</label>
+
+<input type="file" name="qr_image" accept="image/*">
+
+</div>
+
+<button class="primary-btn">
+<i class="fa fa-upload"></i>
+Save & Continue
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+
+<style>
+
+.page-header{
+margin-bottom:20px;
+}
+
+.page-header h1{
+font-weight:600;
+}
+
+.page-header p{
+color:#7a7a7a;
+}
+
+.card-box{
+background:white;
+padding:30px;
+border-radius:14px;
+box-shadow:0 8px 20px rgba(0,0,0,0.05);
+max-width:550px;
+}
+
+.previous-qr{
+text-align:center;
+margin-bottom:25px;
+}
+
+.previous-qr img{
+width:150px;
+border-radius:10px;
+background:#f4f6ff;
+padding:10px;
+margin-bottom:10px;
+}
+
+.current-link{
+font-size:13px;
+color:#777;
+word-break:break-all;
+}
+
+.form-group{
+margin-bottom:18px;
+}
+
+.form-group label{
+display:block;
+margin-bottom:6px;
+font-weight:500;
+}
+
+.form-group input{
+width:100%;
+padding:10px;
+border-radius:8px;
+border:1px solid #ddd;
+}
+
+.primary-btn{
+
+background:linear-gradient(135deg,#6a5cff,#8a7bff);
+color:white;
+
+padding:10px 20px;
+
+border:none;
+border-radius:8px;
+
+font-weight:500;
+cursor:pointer;
+
+}
+
+.primary-btn:hover{
+opacity:0.9;
+}
+
+</style>
+
+{% endblock %}

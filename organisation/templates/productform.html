@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+  .category-box {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #f8faff;
+    border: 1px solid #e0e7ff;
+    padding: 6px 8px;
+    border-radius: 8px;
+}
+
+.category-box i {
+    color: #4f7cff;
+    font-size: 13px;
+}
+
+.category-box select {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 13px;
+    width: 140px;
+    cursor: pointer;
+}
+</style>
+
+<div class="product-wrapper">
+
+    <!-- HEADER -->
+    <div class="product-header">
+        <h1>
+            {% if product %} Edit Product "{{ product.Product_name }}" {% else %} Add New Product {% endif %}
+        </h1>
+        <p>
+            {% if product %} Update product details and stock {% else %} Add product to inventory {% endif %}
+        </p>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="product-card">
+
+            <!-- PRODUCT TABLE -->
+            <table class="product-table">
+
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Product Name</th>
+                        <th>HSN Code</th>
+                        <th>Price (₹)</th>
+                        <th>Stock</th>
+                        <th>Discount %</th>
+                        <th>CGST %</th>
+                        <th>SGST %</th>
+                        <th>IGST %</th>
+                        <th>CESS %</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+         <td>
+    <div class="category-box">
+        <i class="fa fa-tags"></i>
+        <select name="category" required>
+           <option value="">Select Category</option>
+    {% for c in categories %}
+    <option value="{{ c.id }}">{{ c.name }}</option>
+    {% endfor %}
+</select>
+    </div>
+</td>
+
+                        <td>
+                            <input type="text" name="Product_name"
+                                   value="{% if product %}{{ product.Product_name }}{% else %}{{ '' }}{% endif %}" required>
+                        </td>
+
+                        <td>
+                            <input type="text" name="Hsn_code"
+                                   value="{% if product %}{{ product.Hsn_code }}{% else %}{{ '' }}{% endif %}">
+                        </td>
+
+                        <td>
+                            <input type="number" name="Price" step="0.01"
+                                   value="{% if product %}{{ product.Price }}{% else %}{{ 0 }}{% endif %}" required min="0">
+                        </td>
+
+                        <td>
+                            <input type="number" name="stock" step="1"
+                                   value="{% if product %}{{ product.stock }}{% else %}{{ 0 }}{% endif %}" required min="0">
+                        </td>
+
+                        <td>
+                            <input type="number" name="Discount" step="0.1"
+                                   value="{% if product %}{{ product.Discount }}{% else %}{{ 0 }}{% endif %}" min="0">
+                        </td>
+
+                        <td>
+                            <input type="number" name="Cgst" step="0.1"
+                                   value="{% if product %}{{ product.Cgst }}{% else %}{{ 0 }}{% endif %}" min="0">
+                        </td>
+
+                        <td>
+                            <input type="number" name="Sgst" step="0.1"
+                                   value="{% if product %}{{ product.Sgst }}{% else %}{{ 0 }}{% endif %}" min="0">
+                        </td>
+
+                        <td>
+                            <input type="number" name="Igst" step="0.1"
+                                   value="{% if product %}{{ product.Igst }}{% else %}{{ 0 }}{% endif %}" min="0">
+                        </td>
+
+                        <td>
+                            <input type="number" name="Cess" step="0.1"
+                                   value="{% if product %}{{ product.Cess }}{% else %}{{ 0 }}{% endif %}" min="0">
+                        </td>
+
+                    </tr>
+                </tbody>
+
+            </table>
+
+            <!-- ACTION -->
+            <div class="product-actions">
+
+                <button type="submit" class="save-btn">
+                    {% if product %}
+                        <i class="fa fa-save"></i> Update Product
+                    {% else %}
+                        <i class="fa fa-plus"></i> Add Product
+                    {% endif %}
+                </button>
+                {% if product %}
+                <a href="{% url 'product_list' %}" class="cancel-btn">
+                    <i class="fa fa-times"></i> Cancel
+                </a>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

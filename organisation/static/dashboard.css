@@ -1,0 +1,539 @@
+/*------------------------------------------------------------------
+Bootstrap Admin Template by EGrappler.com
+------------------------------------------------------------------*/
+
+
+
+/*------------------------------------------------------------------
+[1. Shortcuts / .shortcuts]
+*/
+
+.shortcuts {
+	text-align: center;	
+}
+
+.shortcuts .shortcut { 
+	width: 22.50%;
+	display: inline-block;
+	padding: 12px 0;
+	margin: 0 .9% 1em;
+	vertical-align: top;	
+	
+	text-decoration: none;
+	
+	background: #f9f6f1;
+	
+	border-radius: 5px;
+}
+
+.shortcuts .shortcut .shortcut-icon {
+	margin-top: .25em;
+	margin-bottom: .25em;
+	
+	font-size: 32px;
+	color: #545454;
+}
+
+.shortcuts .shortcut:hover {
+	background: #00ba8b;
+}
+
+.shortcuts .shortcut:hover span{
+	color: #fff;
+}
+
+.shortcuts .shortcut:hover .shortcut-icon {
+	color: #fff;
+}
+
+.shortcuts .shortcut-label {
+	display: block;
+	
+	font-weight: 400;
+	color: #545454;
+}
+
+
+
+/*------------------------------------------------------------------
+[2. Stats / .stats]
+*/
+
+.stats {
+	width: 100%;
+	display: table;
+	padding: 0 0 0 10px;
+	margin-top: .5em;
+	margin-bottom: 1.9em;
+}
+
+.stats .stat {
+	display: table-cell;
+	width: 40%;
+	vertical-align: top;
+	
+	font-size: 11px;
+	font-weight: bold;
+	color: #999;
+}
+
+.stat-value {
+	display: block;
+	margin-bottom: .55em;
+	
+	font-size: 30px;
+	font-weight: bold;
+	letter-spacing: -2px;
+	color: #444;
+}
+
+.stat-time {
+	text-align: center;
+	padding-top: 1.5em;
+}
+
+.stat-time .stat-value {
+	color: #19bc9c;
+	font-size: 40px;
+}
+
+.stats #donut-chart {
+	height: 100px;
+	margin-left: -20px;	
+}
+
+
+
+
+
+/*------------------------------------------------------------------
+[3. News Item / .news-items]
+*/
+
+.news-items {
+	margin: 1em 0 0;
+}
+
+.news-items li {
+	display: table;
+	padding: 0 2em 0 1.5em;
+	padding-bottom: 1em;
+	margin-bottom: 1em;
+	border-bottom: 1px dotted #CCC;
+}
+
+.news-items li:last-child { padding-bottom: 0; border: none; }
+
+.news-item-date {
+	display: table-cell;
+}
+
+.news-item-detail {
+	display: table-cell;
+}
+
+.news-item-title {
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.news-item-date {
+	width: 75px;
+	vertical-align: middle;
+	text-align: center;
+	
+}
+
+.news-item-day {
+	display: block;
+	margin-bottom: .25em;
+	
+	font-size: 24px;
+	color: #888;
+}
+
+.news-item-preview {
+	margin-bottom: 0;
+	
+	color: #777;
+}
+
+.news-item-month {
+	display: block;
+	padding-right: 1px;	
+	
+	font-size: 12px;
+	font-weight: 600;
+	color: #888;
+}
+
+
+
+/*------------------------------------------------------------------
+[4. Action Table / .action-table]
+*/
+
+.action-table .btn-small {
+	padding: 4px 5px 5px;
+	
+	font-size: 10px;
+}
+
+.action-table .td-actions { 
+	width: 80px; 
+	
+	text-align: center; 
+}
+
+	.action-table .td-actions .btn { 
+		margin-right: .5em;		
+	}
+	
+	.action-table .td-actions .btn:last-child { 
+		margin-right: 0px; 		
+	}
+	
+	
+	
+#big_stats 
+{ 
+	width: 100%; 
+	display: table;
+	margin-top: 1.5em;
+	
+	
+}
+
+.big-stats-container .widget-content {
+	border:0;
+}
+
+#big_stats .stat
+{
+	width: 25%;
+	height: 90px;
+	text-align: center;
+	display: table-cell;
+	padding: 0;
+	position: relative;
+	
+	border-right: 1px solid #CCC;
+	border-left: 1px solid #FFF;
+}
+#big_stats  i { font-size:30px; display:block; line-height: 40px; color:#b2afaa;}
+#big_stats .stat:hover i {color:#19bc9c;}
+
+h6.bigstats{margin: 20px;
+border-bottom: 1px solid #eee;
+padding-bottom: 20px;
+margin-bottom: 26px;}
+
+#big_stats .stat:first-child {
+	border-left: none;
+}
+
+#big_stats .stat:last-child {
+	border-right: none;
+}
+
+#big_stats .stat h4
+{
+	font-size: 11px;
+	font-weight: bold;
+	color: #777;
+	margin-bottom: 1.5em;
+}
+
+#big_stats .stat .value
+{
+	font-size: 45px;
+	font-weight: bold;
+	color: #545454;
+	line-height: 1em;
+}
+
+
+
+/* TABLE ALIGNMENT */
+.invoice-table td {
+    vertical-align: middle;
+}
+
+/* ACTION BUTTON WRAPPER */
+.action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+/* REMOVE UNDERLINE */
+.action-buttons a {
+    text-decoration: none !important;
+}
+
+/* BASE BUTTON */
+.btn-premium {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 9px 18px;
+    border-radius: 14px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: all 0.35s ease;
+    overflow: hidden;
+    cursor: pointer;
+
+    backdrop-filter: blur(8px);
+}
+
+/* VIEW BUTTON */
+.view-btn {
+    background: linear-gradient(135deg, #6cf2c2, #6aa8ff);
+    color: #0b1020;
+
+    border: 1px solid rgba(108, 242, 194, 0.4);
+
+    box-shadow: 
+        0 4px 12px rgba(108, 242, 194, 0.25),
+        inset 0 1px 2px rgba(255,255,255,0.4);
+}
+
+.view-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 30px rgba(108, 242, 194, 0.6);
+}
+
+/* DOWNLOAD BUTTON */
+.download-btn {
+    background: linear-gradient(135deg, #6aa8ff, #4f7cff);
+    color: white;
+
+    border: 1px solid rgba(106, 168, 255, 0.4);
+
+    box-shadow: 
+        0 4px 12px rgba(106, 168, 255, 0.25),
+        inset 0 1px 2px rgba(255,255,255,0.3);
+}
+
+.download-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 30px rgba(106, 168, 255, 0.6);
+}
+
+/* ICON SPACING */
+.btn-premium i {
+    margin-right: 6px;
+}
+
+/* SHINE EFFECT */
+.btn-premium::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 140%;
+    height: 100%;
+
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.5),
+        transparent
+    );
+
+    transition: 0.6s;
+}
+
+.btn-premium:hover::after {
+    left: 120%;
+}
+
+/* CARD */
+.invoice-card {
+    background: #12182b;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* TABLE ROW HOVER */
+.invoice-table tbody tr {
+    transition: 0.3s ease;
+}
+
+.invoice-table tbody tr:hover {
+    background: rgba(106, 168, 255, 0.08);
+    transform: scale(1.01);
+}
+
+/* BADGE */
+.invoice-badge {
+    background: rgba(106, 168, 255, 0.15);
+    color: #6aa8ff;
+
+    padding: 5px 12px;
+    border-radius: 12px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    box-shadow: 0 0 10px rgba(106,168,255,0.2);
+}
+
+
+/* WRAPPER */
+.invoice-view-wrapper {
+    padding: 20px;
+}
+
+/* HEADER */
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* CARD */
+.invoice-view-card {
+    background: #12182b;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* TOP INFO */
+.invoice-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.invoice-top h3 {
+    color: #6aa8ff;
+    font-size: 14px;
+}
+
+.invoice-top p {
+    font-weight: 600;
+}
+
+/* TABLE */
+.invoice-view-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.invoice-view-table th {
+    text-align: left;
+    padding: 10px;
+    color: #aaa;
+}
+
+.invoice-view-table td {
+    padding: 10px;
+    border-top: 1px solid #2a2f45;
+}
+
+/* TOTAL */
+.invoice-total {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.invoice-total div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.final-total {
+    font-size: 18px;
+    font-weight: bold;
+    color: #6cf2c2;
+}
+
+/* PRINT BUTTON */
+.print-btn {
+    background: linear-gradient(135deg, #6aa8ff, #4f7cff);
+    color: white;
+}
+
+.select-invoice {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    background: #12182b;
+    color: white;
+    border: 1px solid #2a2f45;
+    margin-bottom: 15px;
+}
+
+
+.product-list-wrapper {
+    padding: 20px;
+}
+
+.product-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.btn-add {
+    background: linear-gradient(135deg, #6aa8ff, #4f7cff);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+/* CARD */
+.product-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* TABLE */
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.product-table th {
+    text-align: left;
+    padding: 12px;
+    color: #888;
+}
+
+.product-table td {
+    padding: 12px;
+    border-top: 1px solid #eee;
+}
+
+/* BADGES */
+.badge {
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.badge.ok {
+    background: #e6f9f0;
+    color: #2ecc71;
+}
+
+.badge.low {
+    background: #ffe6e6;
+    color: #e74c3c;
+}
+
+

@@ -1,0 +1,133 @@
+{% extends "adminpanel/base.html" %}
+
+{% block content %}
+
+<div class="cards">
+
+<div class="card stat">
+<i class="fa fa-building"></i>
+<h3>{{ total_org }}</h3>
+<p>Organisations</p>
+</div>
+
+<div class="card stat">
+<i class="fa fa-users"></i>
+<h3>{{ total_customers }}</h3>
+<p>Customers</p>
+</div>
+
+<div class="card stat">
+<i class="fa fa-file-invoice"></i>
+<h3>{{ total_invoices }}</h3>
+<p>Invoices</p>
+</div>
+
+<div class="card stat">
+<i class="fa fa-user-tie"></i>
+<h3>{{ total_employees }}</h3>
+<p>Employees</p>
+</div>
+
+</div>
+
+<div class="table-box">
+
+<h3>Recent Organisations</h3>
+
+<table class="org-table">
+
+<thead>
+<tr>
+<th>Company</th>
+<th>Type</th>
+<th>City</th>
+<th>Phone</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for org in organisations %}
+
+<tr>
+<td>
+<div class="org-name">
+<div class="org-avatar">
+{{ org.company_name|slice:":1" }}
+</div>
+
+<span>{{ org.company_name }}</span>
+</div>
+</td>
+
+<td>{{ org.company_type }}</td>
+
+<td>{{ org.city }}</td>
+
+<td>{{ org.phone }}</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="4">No organisations found</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<!-- ================= RECENT INVOICES ================= -->
+
+<div class="table-box">
+
+<h3>Recent Invoices</h3>
+
+<table class="org-table">
+
+<thead>
+<tr>
+<th>Invoice No</th>
+<th>Customer</th>
+<th>Date</th>
+<th>Payment Type</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for inv in invoices %}
+
+<tr>
+
+<td>#{{ inv.Invoice_num }}</td>
+
+<td>{{ inv.Cust_name }}</td>
+
+<td>{{ inv.Date }}</td>
+
+<td>{{ inv.Payment_type }}</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="4">No invoices found</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

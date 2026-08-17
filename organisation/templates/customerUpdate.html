@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="customer-form-wrapper">
+
+    <div class="form-header">
+
+        <div class="form-header-icon edit-icon">
+            <i class="fa fa-user-edit"></i>
+        </div>
+
+        <div>
+            <h1>Edit Customer</h1>
+            <p>Update customer details</p>
+        </div>
+
+    </div>
+
+
+    <div class="customer-form-card">
+
+        <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Customer / Vendor Name</label>
+                <input type="text" name="cust_name" value="{{ customer.cust_name }}">
+            </div>
+
+            <div class="form-group">
+                <label>Contact Person</label>
+                <input type="text" name="cont_person" value="{{ customer.cont_person }}">
+            </div>
+
+            <div class="form-group">
+                <label>Contact Number</label>
+                <input type="number" name="contact_num" value="{{ customer.contact_num }}">
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" value="{{ customer.email }}">
+            </div>
+
+            <div class="form-group">
+                <label>Company Type</label>
+                <input type="text" name="company_type" value="{{ customer.company_type }}">
+            </div>
+
+            <div class="form-group">
+                <label>Address Line 1</label>
+                <input type="text" name="address" value="{{ customer.address }}">
+            </div>
+
+            <div class="form-group">
+                <label>Address Line 2</label>
+                <input type="text" name="address_2" value="{{ customer.address_2 }}">
+            </div>
+
+            <div class="form-group">
+                <label>Landmark</label>
+                <input type="text" name="landmark" value="{{ customer.landmark }}">
+            </div>
+
+            <div class="form-group">
+                <label>Country</label>
+                <input type="text" name="country" value="{{ customer.country }}">
+            </div>
+
+            <div class="form-group">
+                <label>State</label>
+                <input type="text" name="state" value="{{ customer.state }}">
+            </div>
+
+            <div class="form-group">
+                <label>City</label>
+                <input type="text" name="city" value="{{ customer.city }}">
+            </div>
+
+            <div class="form-group">
+                <label>Pincode</label>
+                <input type="number" name="pincode" value="{{ customer.pincode }}">
+            </div>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button type="submit" class="premium-update-btn">
+                <i class="fa fa-check"></i>
+                Update Customer
+            </button>
+
+            <a href="{% url 'customer' %}" class="cancel-btn">
+                Cancel
+            </a>
+
+        </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

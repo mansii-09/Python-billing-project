@@ -1,0 +1,77 @@
+{% extends "adminpanel/base.html" %}
+
+{% block content %}
+
+<div class="table-box">
+
+<div style="display:flex;justify-content:space-between;margin-bottom:20px;align-items:center">
+
+<h3>Organisations</h3>
+
+<a href="{% url 'add_organisation' %}" class="btn-add">+ Add Organisation</a>
+
+</div>
+
+<table class="org-table">
+
+<thead>
+
+<tr>
+<th>Company</th>
+<th>Type</th>
+<th>City</th>
+<th>Phone</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for org in organisations %}
+
+<tr>
+
+<td>{{ org.company_name }}</td>
+
+<td>{{ org.company_type }}</td>
+
+<td>{{ org.city }}</td>
+
+<td>{{ org.phone }}</td>
+
+<td class="action-buttons">
+
+<a href="{% url 'update_organisation' org.id %}" class="action-btn edit">
+<i class="fa-solid fa-pen"></i>
+</a>
+
+<a href="{% url 'delete_organisation' org.id %}"
+class="action-btn delete"
+onclick="return confirmDelete();">
+<i class="fa-solid fa-trash"></i>
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+<script>
+
+function confirmDelete(){
+
+return confirm("⚠ Are you sure you want to delete this organisation?");
+
+}
+
+</script>
+
+{% endblock %}

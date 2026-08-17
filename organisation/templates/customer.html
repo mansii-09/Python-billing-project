@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="msg-box" style="
+        background: #d4edda;
+        color: #155724;
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 6px;
+        font-weight: 500;
+    ">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+<div class="dashboard-wrapper">
+
+    <!-- Header -->
+    <div class="dashboard-header">
+
+        <div>
+            <h1 class="page-title">Customers</h1>
+            <p class="subtitle">Manage your customers and vendors</p>
+
+        </div>
+
+        <div class="header-actions">
+
+            <!-- Premium QR Card -->
+            <div class="qr-action-card">
+
+                <div class="qr-icon">
+                    <i class="fa fa-qrcode"></i>
+                </div>
+
+                <div class="qr-text">
+                    <span class="qr-title">Payment QR</span>
+                    <span class="qr-sub">Upload or update payment QR</span>
+                </div>
+
+                <a href="{% url 'upload_qr' %}" class="qr-upload-btn">
+                    Upload
+                </a>
+
+            </div>
+            <!-- Search -->
+            <input 
+            type="text" 
+            placeholder="Search customer..." 
+            class="search-box"
+            id="customerSearch">
+
+            <!-- Add Customer -->
+            <a href="{% url 'addcustomer' %}" class="add-customer-btn">
+                <i class="fa fa-user-plus"></i>
+                <span>Add Customer</span>
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Customer Table -->
+    <div class="table-card">
+
+        <table class="premium-table" id="customerTable">
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Customer</th>
+                    <th>Contact</th>
+                    <th>Company</th>
+                    <th>State</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for customer in customers %}
+
+                <tr>
+
+                    <td>#{{ forloop.counter }}</td>
+
+                    <td class="customer-cell">
+
+                        <div class="avatar">
+                            {{ customer.cust_name|slice:":1"|upper }}
+                        </div>
+
+                        <a href="{% url 'customer_history' customer.id %}" class="name link">
+                            {{ customer.cust_name }}
+                        </a>
+
+                    </td>
+
+                    <td>{{ customer.contact_num }}</td>
+
+                    <td>
+                        <span class="badge">
+                            {{ customer.company_type }}
+                        </span>
+                    </td>
+
+                    <td>{{ customer.state }}</td>
+
+                    <td class="actions">
+
+                        <a href="{% url 'customer_update' customer.id %}" class="icon-btn edit">
+                            <i class="fa fa-pen"></i>
+                        </a>
+
+                        <a href="{% url 'delete_customer' customer.id %}"
+                           onclick="return confirm('Delete this customer?')"
+                           class="icon-btn delete">
+                            <i class="fa fa-trash"></i>
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="6" style="text-align:center;padding:30px;">
+                        No customers found
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<!-- LIVE SEARCH SCRIPT -->
+
+<script>
+
+const searchInput = document.getElementById("customerSearch");
+
+if(searchInput){
+
+searchInput.addEventListener("keyup", function() {
+
+    let filter = this.value.toLowerCase();
+
+    let rows = document.querySelectorAll("#customerTable tbody tr");
+
+    rows.forEach(function(row){
+
+        let text = row.innerText.toLowerCase();
+
+        if(text.includes(filter)){
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+
+    });
+
+});
+}
+
+
+setTimeout(function() {
+    let msgs = document.querySelectorAll(".msg-box");
+    msgs.forEach(function(msg) {
+        msg.style.display = "none";
+    });
+}, 3000);
+
+</script>
+
+
+{% endblock %}

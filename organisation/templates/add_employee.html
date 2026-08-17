@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+
+.page-wrapper{
+    padding:30px 20px;
+    display:flex;
+    justify-content:center;
+}
+
+.content-box{
+    width:100%;
+    max-width:800px;
+}
+
+/* HEADER */
+.page-header{
+    margin-bottom:20px;
+}
+
+.page-header h1{
+    margin:0;
+    color:#12182b;
+}
+
+.page-header p{
+    color:#7a8599;
+    font-size:14px;
+}
+
+/* FORM CARD */
+.form-card{
+    background:#ffffff;
+    padding:30px;
+    border-radius:16px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.05);
+}
+
+/* GRID */
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group label{
+    font-size:13px;
+    margin-bottom:6px;
+    color:#6b7280;
+}
+
+.form-group input{
+    padding:11px;
+    border-radius:10px;
+    border:1px solid #e2e8f0;
+    outline:none;
+}
+
+.form-group input:focus{
+    border-color:#4f7cff;
+}
+
+/* BUTTON */
+.btn-primary{
+    margin-top:20px;
+    padding:12px 20px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(135deg,#6aa8ff,#4f7cff);
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.btn-primary:hover{
+    transform:translateY(-1px);
+}
+
+/* MOBILE */
+@media(max-width:700px){
+.form-grid{
+grid-template-columns:1fr;
+}
+}
+
+</style>
+
+<div class="page-wrapper">
+
+<div class="content-box">
+
+<!-- HEADER -->
+<div class="page-header">
+<h1>Add Employee</h1>
+<p>Create new employee record</p>
+</div>
+
+<!-- FORM -->
+<div class="form-card">
+
+<form method="POST">
+{% csrf_token %}
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Name</label>
+<input type="text" name="name" required>
+</div>
+
+<div class="form-group">
+<label>Email</label>
+<input type="email" name="email" required>
+</div>
+
+<div class="form-group">
+<label>Phone</label>
+<input type="text" name="phone">
+</div>
+
+<div class="form-group">
+<label>Role</label>
+<input type="text" name="role">
+</div>
+
+<div class="form-group">
+<label>Salary</label>
+<input type="number" name="salary">
+</div>
+
+<div class="form-group">
+<label>Joining Date</label>
+<input type="date" name="joining_date">
+</div>
+
+</div>
+
+<button class="btn-primary">Save Employee</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}
