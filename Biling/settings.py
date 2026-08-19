@@ -65,7 +65,7 @@ ROOT_URLCONF = 'Biling.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -90,7 +90,7 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -134,9 +134,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # (optional) additional directories to search for static files
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'some_additional_static_dir'),
-# ]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'some_additional_static_dir'),
+]
 
 #Media Files
 MEDIA_URL = '/media/'
